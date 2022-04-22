@@ -11,5 +11,5 @@ class Match extends Model
 
     protected $table = "matches";
 
-    protected $fillable = ['fecha', 'etapa', 'equipo_local', 'equipo_visitante'];
+    protected $fillable = ['api_id', 'fecha', 'etapa', 'equipo_local', 'equipo_visitante'];
 }

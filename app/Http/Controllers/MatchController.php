@@ -24,8 +24,10 @@ class MatchController extends Controller
      */
     public function index()
     {
-        $matches = MatchService::getMatches();
-      
-        return view('home', compact('matches'));
+        $service_matches = MatchService::getApiMatches();
+        MatchService::saveMatches($service_matches);
+        $matches = MatchService::getDBMatches();
+
+        return view('home', 'matches');
     }
 }
