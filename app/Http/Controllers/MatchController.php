@@ -24,10 +24,9 @@ class MatchController extends Controller
      */
     public function index()
     {
-        $service_matches = MatchService::getApiMatches();
-        MatchService::saveMatches($service_matches);
-        $matches = MatchService::getDBMatches();
-
-        return view('home', 'matches');
+        $service_matches = MatchService::getApiMatches(); //Obtener partidos programados consumiendo el api 
+        MatchService::saveMatches($service_matches);    //Guardar partidos en base de datos 
+        $matches = MatchService::getDBMatches();        //Leer todos los partidos de la base de datos
+        return view('home', compact('matches'));
     }
 }

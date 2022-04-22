@@ -3,6 +3,7 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use App\Models\Match;
+use Carbon\Carbon;
 
 /**
  * Class MatchService.
@@ -20,23 +21,23 @@ class MatchService
 
     public function saveMatches($matches) {
         
-        $matches_ids = Match()::lists('api_id');
+        $matches_db = Match::select('api_id')->get()->toArray();
+        $matches_ids = array_column($matches_db,'api_id');
 
         foreach($matches as $match) {
-            if(!in_array($match['id'], $matches_ids)) {
+            if(!in_array($match['id'], $matches_ids)) {               
                 $new_match = new Match();
                 $new_match->api_id = $match['id'];
-                $new_match->fecha = $match['utcDate'];
+                $new_match->fecha = Carbon::parse($match['utcDate'])->format('Y-m-d H:i:s');
                 $new_match->etapa = $match['stage'];
                 $new_match->equipo_local = $match['homeTeam']['name'];
                 $new_match->equipo_visitante = $match['awayTeam']['name'];
-                //$new_match->save();
-                dump($new_match);
+                $new_match->save();                
             }
         }
     }
 
-    public function getDBMatches() { 
+    public function getDBMatches() {         
         $matches = Match::get();
         return $matches;
     }

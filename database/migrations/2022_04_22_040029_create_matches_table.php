@@ -16,11 +16,11 @@ class CreateMatchesTable extends Migration
         Schema::create('matches', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('api_id');
-            $table->date('fecha');
+            $table->integer('api_id')->unique();
+            $table->dateTime('fecha');
             $table->string('etapa');
-            $table->string('equipo_local');
-            $table->string('equipo_visitante');
+            $table->string('equipo_local')->nullable();
+            $table->string('equipo_visitante')->nullable();
             $table->timestamps();
         });
     }
